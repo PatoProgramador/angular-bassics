@@ -14,12 +14,14 @@ export class ProductDetailComponent implements OnInit {
   producto?: Product;
   productList: Product[] = productList;
   loading: boolean = true;
+  color:string = '';
 
   ngOnInit(): void {
     setTimeout(() => {
       this._route.params.subscribe(
         params => {
           this.producto = this.productList.find(product => product.id == params['productId']);
+          this.color = this.producto?.price as number > 5 ? 'red': '';
           this.loading = false;
         }
       );
