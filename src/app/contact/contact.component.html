@@ -1,1 +1,34 @@
-<p>contact works!</p>
+<div class="container">
+    <!-- FORM PLANTILLA -->
+    <!-- <form #myform="ngForm" (ngSubmit)="enviar()">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="email" class="form-control" id="name" [(ngModel)]="user.name" required
+                [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="user.email" required
+                [ngModelOptions]="{standalone: true}">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form> -->
+    <!-- FORM REACTIVO -->
+    <form [formGroup]="formularioContacto" (ngSubmit)="enviar()">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input [ngClass]="{'is-invalid': hasErros('nombre', 'required') || hasErros('nombre', 'minlength')}"
+             type="text" class="form-control" id="name" formControlName="nombre">
+            <div class="text-danger" *ngIf="hasErros('nombre', 'required')">Nombre requerido</div>
+            <div class="text-danger" *ngIf="hasErros('nombre', 'minlength')">Nombre requiere minimo 3 caracteres</div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input [ngClass]="{'is-invalid': hasErros('email', 'required') || hasErros('email', 'email')}"
+             type="email" class="form-control" id="email" formControlName="email">
+            <div class="text-danger" *ngIf="hasErros('email', 'email')">Email inválido</div>
+            <div class="text-danger" *ngIf="hasErros('email', 'required')">Email requerido</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
