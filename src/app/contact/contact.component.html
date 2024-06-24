@@ -23,6 +23,28 @@
             <div class="text-danger" *ngIf="hasErros('nombre', 'minlength')">Nombre requiere minimo 3 caracteres</div>
         </div>
         <div class="mb-3">
+            <label for="name" class="form-label">Apellido</label>
+            <input [ngClass]="{'is-invalid': hasErros('apellido', 'required') || hasErros('apellido', 'minlength')}"
+             type="text" class="form-control" id="name" formControlName="apellido">
+            <div class="text-danger" *ngIf="hasErros('apellido', 'required')">Apellido requerido</div>
+            <div class="text-danger" *ngIf="hasErros('apellido', 'minlength')">Apellido requiere minimo 3 caracteres</div>
+        </div>
+        <div class="mb-3">
+            <label for="tipoDni" class="form-label">Tipo de DNI: </label>
+            <select class="form-select" id="tipoDni" formControlName="tipoDni">
+                <option value="DNI">DNI</option>
+                <option value="Pasaporte">Pasaporte</option>
+                <option value="Cedula">Cedula</option>
+              </select>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">número de {{ tipoDni }}</label>
+            <input [ngClass]="{'is-invalid': hasErros('dni', 'required') || hasErros('dni', 'minlength')}"
+             type="text" class="form-control" id="name" formControlName="dni">
+            <div class="text-danger" *ngIf="hasErros('dni', 'required')">{{tipoDni}} requerido</div>
+            <div class="text-danger" *ngIf="hasErros('dni', 'minlength')">{{tipoDni}} requiere minimo 3 caracteres</div>
+        </div>
+        <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input [ngClass]="{'is-invalid': hasErros('email', 'required') || hasErros('email', 'email')}"
              type="email" class="form-control" id="email" formControlName="email">
