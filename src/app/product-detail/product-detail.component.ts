@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Product, productList } from '../products/products.mock';
-import { ActivatedRoute } from '@angular/router';
+//import { Product, productList } from '../products/products.mock';
+import { ActivatedRoute, Params } from '@angular/router';
+import { IProduct } from '../models/product.model';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -9,22 +11,29 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductDetailComponent implements OnInit {
 
-  constructor(private _route: ActivatedRoute) {}
+  constructor(private _route: ActivatedRoute,
+    private _apiService: ApiService
+  ) { }
 
-  producto?: Product;
-  productList: Product[] = productList;
+  producto?: IProduct;
   loading: boolean = true;
-  color:string = '';
+  color: string = '';
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this._route.params.subscribe(
-        params => {
-          this.producto = this.productList.find(product => product.id == params['productId']);
-          this.color = this.producto?.price as number > 5 ? 'red': '';
-          this.loading = false;
-        }
-      );
-    }, 1500)
+    this._route.params.subscribe({
+      next: (params: Params) => {
+        this._apiService.getProductById(Number(params['productId'])).subscribe({
+          next: (data: IProduct) => {
+            this.producto = data;
+            this.color = this.producto?.price as number > 200 ? 'red' : '';
+            this.loading = false;
+          }, 
+          error: (error: any) => {
+            console.log(error);
+            this.loading = false;
+          }
+        })
+      }
+    })
   }
 }
